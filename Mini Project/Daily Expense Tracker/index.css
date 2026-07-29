@@ -1,0 +1,27 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.btn-customized{
+  max-width: 200px;
+}
+.customized-main{
+  min-height: 75vh;
+}
+
+input.border-focus:focus{
+  border-color: #0d6efd;
+  padding-left: 0.5rem;
+}
+
+.dark-mode{
+  background: #000;
+  color: white;
+}
+
+.reset{
+  all: unset;
+  cursor: pointer;
+}
