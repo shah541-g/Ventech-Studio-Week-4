@@ -1,0 +1,63 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.btn-customized{
+  max-width: 200px;
+}
+.customized-main{
+  min-height: 75vh;
+}
+
+input.border-focus:focus{
+  border-color: #0d6efd;
+  padding-left: 0.5rem;
+}
+
+.dark-mode{
+  background: #000;
+  color: white;
+}
+
+.reset{
+  all: unset;
+  cursor: pointer;
+}
+
+.light-mode-background{
+  background: #0d6efd;
+  color: white;
+}
+
+.light-mode-text{
+  background: white;
+  color: #0d6efd;
+}
+
+.dark-mode-text{
+  background: white;
+  color: rgb(33, 37, 41);
+}
+.btn-black{
+  background: #000;
+  color: white;
+}
+.btn-black:hover{
+  background: #151313;
+  color: white;
+}
+
+.border-black{
+  border: 4px solid black;
+}
+
+.border-white{
+  border: 4px solid white;
+}
+
+.dark-mode-background{
+  color: white;
+  background: rgb(33, 37, 41);
+}
