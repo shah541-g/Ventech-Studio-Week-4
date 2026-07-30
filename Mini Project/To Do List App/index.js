@@ -91,13 +91,19 @@ const clearFields = () => {
   const editTitleField = document.getElementById('edit-element-title')
   editTitleField.value = ""
 }
-
+const updateCount = () => {
+  const completedCount = globalData.filter(task => task.status=="completed").length
+  document.getElementById("completed-count").textContent = completedCount
+  const total = globalData.length
+  document.getElementById("total-count").textContent = total
+}
 const performSubmitAction = () => {
   const submittedInputs = fetchFieldsText();
   const response = validateFields(submittedInputs);
   if (response === null) {
     clearErrors();
     addNewTask(submittedInputs[0], submittedInputs[1],  submittedInputs[2]);
+    updateCount()
     clearTable()
     clearFields();
     renderData();
@@ -119,6 +125,7 @@ const performEditAction = () => {
   if (response === null) {
     clearErrors();
     updateTask(id, title, status,  priority);
+    updateCount()
     clearTable()
     clearFields();
     renderData();
@@ -294,6 +301,7 @@ const addEventListenersToElements = () => {
 
 const main = () => {
   loadData();
+  updateCount()
   renderData();
   addEventListenersToElements();
 };
