@@ -4,17 +4,12 @@ const performCommonValidations = (inputText) => {
   let isEmpty = inputText.trim().length === 0;
   return isEmpty;
 };
-
 const validateTitle = (title = "") => {
   return /^[A-Za-z ]+$/.test(title);
 };
-
-const validatePriority = (priority = 'medium') => {
-  return priority === 'medium' || priority === 'high' || priority === 'low';
-}
-
-
-
+const validatePriority = (priority = "medium") => {
+  return priority === "medium" || priority === "high" || priority === "low";
+};
 const validateFields = ([title, priority, status]) => {
   const errors = [];
   if (performCommonValidations(title)) {
@@ -33,7 +28,7 @@ const validateFields = ([title, priority, status]) => {
   }
   if (performCommonValidations(priority)) {
     errors.push({
-      priority: false,
+      status: false,
       message: "priority is Required",
       field: "priority",
     });
@@ -53,58 +48,53 @@ const fetchFieldsText = () => {
   const title = titleField.value;
   const statusField = document.getElementById("element-status");
   const status = statusField.value;
-  const priorityField = document.getElementById('element-priority');
+  const priorityField = document.getElementById("element-priority");
   const priority = priorityField.value;
   return [title, status, priority];
 };
-
-const addNewTask = (title = "",  status = "to-do", priority = 'medium') => {
+const addNewTask = (title = "", status = "to-do", priority = "medium") => {
   const newTaskData = {
     title,
     status,
-    priority
+    priority,
   };
-  globalData = [...globalData, {id: Date.now(),...newTaskData}]
+  globalData = [...globalData, { id: Date.now(), ...newTaskData }];
 };
-
-const updateTask = (id, title = "",  status = "to-do", priority = 'medium') => {
-  for(const task of globalData){
-    if(task.id==id){
+const updateTask = (id, title = "", status = "to-do", priority = "medium") => {
+  for (const task of globalData) {
+    if (task.id == id) {
       task.title = title;
-      task.status=status;
-      task.priority=priority;
+      task.status = status;
+      task.priority = priority;
     }
   }
-}
-
+};
 const clearErrors = () => {
   const titleErrorElement = document.getElementById("title-warning");
-  titleErrorElement.textContent = ""
+  titleErrorElement.textContent = "";
   titleErrorElement.classList.add("d-none");
-  const editTitleErrorElement = document.getElementById("edit-title-warning");
-  editTitleErrorElement.textContent = ""
-  editTitleErrorElement.classList.add("d-none");
 };
 const clearFields = () => {
-  const titleField = document.getElementById('element-title')
-  titleField.value = ""
-  const editTitleField = document.getElementById('edit-element-title')
-  editTitleField.value = ""
-}
+  const titleField = document.getElementById("element-title");
+  titleField.value = "";
+};
+
 const updateCount = () => {
-  const completedCount = globalData.filter(task => task.status=="completed").length
-  document.getElementById("completed-count").textContent = completedCount
-  const total = globalData.length
-  document.getElementById("total-count").textContent = total
-}
+  const completedCount = globalData.filter(
+    (task) => task.status == "completed",
+  ).length;
+  document.getElementById("completed-count").textContent = completedCount;
+  const total = globalData.length;
+  document.getElementById("total-count").textContent = total;
+};
 const performSubmitAction = () => {
   const submittedInputs = fetchFieldsText();
   const response = validateFields(submittedInputs);
   if (response === null) {
     clearErrors();
-    addNewTask(submittedInputs[0], submittedInputs[1],  submittedInputs[2]);
-    updateCount()
-    clearTable()
+    addNewTask(submittedInputs[0], submittedInputs[1], submittedInputs[2]);
+    updateCount();
+    clearTable();
     clearFields();
     renderData();
   } else {
@@ -117,16 +107,16 @@ const performSubmitAction = () => {
   }
 };
 const performEditAction = () => {
-  const id = document.getElementById('edit-id').value
-  const title = document.getElementById("edit-element-title").value;
-  const status = document.getElementById("edit-element-status").value;
-  const priority = document.getElementById('edit-element-priority').value;
-  const response = validateFields([title,priority,status]);
+  const id = document.getElementById("edit-id").value;
+  const title = document.getElementById("element-title").value;
+  const status = document.getElementById("element-status").value;
+  const priority = document.getElementById("element-priority").value;
+  const response = validateFields([title, priority, status]);
   if (response === null) {
     clearErrors();
-    updateTask(id, title, status,  priority);
-    updateCount()
-    clearTable()
+    updateTask(id, title, status, priority);
+    updateCount();
+    clearTable();
     clearFields();
     renderData();
   } else {
@@ -138,51 +128,54 @@ const performEditAction = () => {
     }
   }
 };
-
 const loadData = () => {
   globalData = [
     {
       id: 1,
       title: "Complete To Do List App",
       status: "active",
-      priority: "high"
+      priority: "high",
     },
     {
-      id:2,
+      id: 2,
       title: "Complete Remaining W3School Topics",
       status: "to-do",
-      priority: "low"
+      priority: "low",
     },
   ];
 };
-
 const colorKeys = {
-  high:"text-danger fw-bold",
+  high: "text-danger fw-bold",
   medium: "text-primary fw-bold",
   low: "text-success fw-bold",
   active: "text-danger fw-bold",
-  completed: 'text-success fw-bold',
-  "to-do": "text-primary fw-bold"
-}
+  completed: "text-success fw-bold",
+  "to-do": "text-primary fw-bold",
+};
 
 const deleteTask = (id) => {
-  globalData = globalData.filter(task => task.id !== id);
-  clearTable()
-  renderData()
-}
-
+  globalData = globalData.filter((task) => task.id !== id);
+  clearTable();
+  renderData();
+};
 const editTask = (id) => {
-  const modal = new bootstrap.Modal(document.getElementById("edit-modal"))
+  const modal = new bootstrap.Modal(document.getElementById("form-modal"));
+  document.getElementById("submit-btn").classList.add("d-none");
+  document.getElementById("submit-btn").classList.remove("d-block");
+  document.getElementById("edit-btn").classList.add("d-block");
+  document.getElementById("edit-btn").classList.remove("d-none");
   modal.show();
-  const selectedItem = globalData.filter(task => task.id == id)
-  document.getElementById('edit-element-title').value = selectedItem[0].title
-  document.getElementById('edit-element-status').value = selectedItem[0].status
-  document.getElementById('edit-element-priority').value = selectedItem[0].priority
-  document.getElementById('edit-id').value = id
-}
-
-const deleteBtn = (id) => `<button class="btn btn-danger border border-1 rounded" id="delete-${id}" onclick="deleteTask(${id})"><i class="bi bi-trash"></i></button> `
-const editButton = (id) =>   `<button class="btn btn-success border border-1 rounded" onclick="editTask(${id})" id="edit-${id}"><i class="bi bi-pen"></i></button> `
+  const selectedItem = globalData.filter((task) => task.id == id);
+  document.getElementById("modal-title").innerHTML = "Edit Task Details";
+  document.getElementById("element-title").value = selectedItem[0].title;
+  document.getElementById("element-status").value = selectedItem[0].status;
+  document.getElementById("element-priority").value = selectedItem[0].priority;
+  document.getElementById("edit-id").value = id;
+};
+const deleteBtn = (id) =>
+  `<button class="btn btn-danger border border-1 rounded" id="delete-${id}" onclick="deleteTask(${id})"><i class="bi bi-trash"></i></button> `;
+const editButton = (id) =>
+  `<button class="btn btn-success border border-1 rounded" onclick="editTask(${id})" id="edit-${id}"><i class="bi bi-pen"></i></button> `;
 
 const getHtmlCodeToRenderData = (data = []) => {
   if (data.length === 0) {
@@ -191,11 +184,10 @@ const getHtmlCodeToRenderData = (data = []) => {
   let tHead = `<thead><tr class="text-capitalize">`;
   const keys = Object.keys(data[0]);
   for (const key of keys) {
-    if (key!=="id")
-    tHead += `<th>${key}</th>`;
+    if (key !== "id") tHead += `<th>${key}</th>`;
   }
-  tHead+= `<th class="text-success">Edit</th>`
-  tHead+= `<th class="text-danger">Delete</th>`
+  tHead += `<th class="text-success">Edit</th>`;
+  tHead += `<th class="text-danger">Delete</th>`;
   tHead += "</tr></thead>";
 
   let tBody = "<tbody>";
@@ -203,8 +195,8 @@ const getHtmlCodeToRenderData = (data = []) => {
     tBody += "<tr>";
 
     for (const key of keys) {
-      if (key!=="id")
-      tBody += `<td class="text-capitalize ${colorKeys[element[key]]}">${element[key]}</td>`;
+      if (key !== "id")
+        tBody += `<td class="text-capitalize ${colorKeys[element[key]]}">${element[key]}</td>`;
     }
 
     tBody += `<td>${editButton(element["id"])}</td>`;
@@ -214,7 +206,6 @@ const getHtmlCodeToRenderData = (data = []) => {
 
   return [tHead, tBody];
 };
-
 const renderData = (data = globalData) => {
   const noDataWrapper = document.getElementById("no-data-wrapper");
   const table = document.getElementById("data-table");
@@ -236,7 +227,6 @@ const renderData = (data = globalData) => {
     tBody.insertAdjacentHTML("afterbegin", code[1]);
   }
 };
-
 const fetchFilteredExpenses = (searchText) => {
   return globalData.filter((expense) => {
     return (
@@ -245,48 +235,57 @@ const fetchFilteredExpenses = (searchText) => {
     );
   });
 };
-
 const clearTable = () => {
   document.getElementById("data-table-head").innerHTML = "";
   document.getElementById("data-table-body").innerHTML = "";
 };
-
 const liveRenderFilteredExpenses = (event) => {
   const searchText = event.target.value.toLowerCase();
   const filteredResults = fetchFilteredExpenses(searchText);
   clearTable();
   renderData(filteredResults);
 };
-
 const toggleModeClass = () => {
-  if (document.body.classList.contains('dark-mode')){
-    document.getElementById('dark-mode-div').classList.add('bg-white');
-    document.getElementById('dark-mode-div').classList.remove('bg-dark');
-    document.getElementById('dark-mode-icon-img').setAttribute('src','./assets/moon-stars-fill.svg')
-  } else{
-    document.getElementById('dark-mode-div').classList.remove('bg-white');
-    document.getElementById('dark-mode-div').classList.add('bg-danger');
-    document.getElementById('dark-mode-icon-img').setAttribute('src','./assets/moon-stars.svg')
-    
+  if (document.body.classList.contains("dark-mode")) {
+    document.getElementById("dark-mode-div").classList.add("bg-white");
+    document.getElementById("dark-mode-div").classList.remove("bg-dark");
+    document
+      .getElementById("dark-mode-icon-img")
+      .setAttribute("src", "./assets/moon-stars-fill.svg");
+  } else {
+    document.getElementById("dark-mode-div").classList.remove("bg-white");
+    document.getElementById("dark-mode-div").classList.add("bg-danger");
+    document
+      .getElementById("dark-mode-icon-img")
+      .setAttribute("src", "./assets/moon-stars.svg");
   }
-  document.body.classList.toggle('dark-mode')
-  document.getElementById('header').classList.toggle('dark-mode-background')
-  document.getElementById('checkmark-icon').classList.toggle('dark-mode-text');
-  document.getElementById('completed-count').classList.toggle('dark-mode-text');
-  document.getElementById('total-count').classList.toggle('dark-mode-text');
-  document.getElementById('add-btn').classList.toggle('btn-dark')
-  document.getElementById('submit-btn').classList.toggle('btn-black')
-  document.getElementById('submit-btn').classList.toggle('btn-primary')
-  document.getElementById('close-btn').classList.toggle('btn-close-white');
-  document.getElementById('modal-header').classList.toggle('dark-mode-background')
-  document.getElementById('data-table-head').classList.toggle('table-dark')
-  document.getElementById('footer').classList.toggle('dark-mode-background')
-  document.getElementById('modal-body').classList.toggle('dark-mode-background')
-  document.getElementById('modal-footer').classList.toggle('dark-mode-background')
-  document.getElementById('add-new-task-section').classList.toggle('border-white')
-  document.getElementById('filter-and-list-section').classList.toggle('border-white')
-
-}
+  document.body.classList.toggle("dark-mode");
+  document.getElementById("header").classList.toggle("dark-mode-background");
+  document.getElementById("checkmark-icon").classList.toggle("dark-mode-text");
+  document.getElementById("completed-count").classList.toggle("dark-mode-text");
+  document.getElementById("total-count").classList.toggle("dark-mode-text");
+  document.getElementById("add-btn").classList.toggle("btn-dark");
+  document.getElementById("submit-btn").classList.toggle("btn-black");
+  document.getElementById("submit-btn").classList.toggle("btn-primary");
+  document.getElementById("close-btn").classList.toggle("btn-close-white");
+  document
+    .getElementById("modal-header")
+    .classList.toggle("dark-mode-background");
+  document.getElementById("data-table-head").classList.toggle("table-dark");
+  document.getElementById("footer").classList.toggle("dark-mode-background");
+  document
+    .getElementById("modal-body")
+    .classList.toggle("dark-mode-background");
+  document
+    .getElementById("modal-footer")
+    .classList.toggle("dark-mode-background");
+  document
+    .getElementById("add-new-task-section")
+    .classList.toggle("border-white");
+  document
+    .getElementById("filter-and-list-section")
+    .classList.toggle("border-white");
+};
 
 const addEventListenersToElements = () => {
   const submitBtn = document.getElementById("submit-btn");
@@ -295,13 +294,24 @@ const addEventListenersToElements = () => {
   editBtn.addEventListener("click", performEditAction);
   const filterInputField = document.getElementById("filter");
   filterInputField.addEventListener("input", liveRenderFilteredExpenses);
-  const darkModeBtn = document.getElementById('dark-mode-btn')
-  darkModeBtn.addEventListener('click',toggleModeClass)
+  const darkModeBtn = document.getElementById("dark-mode-btn");
+  darkModeBtn.addEventListener("click", toggleModeClass);
+  const addBtn = document.getElementById("add-btn");
+  addBtn.addEventListener("click", () => {
+  document.getElementById("submit-btn").classList.add("d-block");
+  document.getElementById("submit-btn").classList.remove("d-none");
+  document.getElementById("edit-btn").classList.add("d-none");
+  document.getElementById("edit-btn").classList.remove("d-block")
+    document.getElementById("modal-title").innerHTML = "Add Task";
+    document.getElementById("element-title").value = "";
+    document.getElementById("element-status").value = "to-do";
+    document.getElementById("element-priority").value = "medium";
+    document.getElementById("edit-id").value = "";
+  });
 };
-
 const main = () => {
   loadData();
-  updateCount()
+  updateCount();
   renderData();
   addEventListenersToElements();
 };

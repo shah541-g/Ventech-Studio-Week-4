@@ -82,6 +82,7 @@
               </div>
               <div class="modal-body" id="modal-body">
                 <form class="form">
+                  <input type="text" id="edit-id" class="d-none">
                   <div class="form-group row mb-1">
                     <div
                       class="title d-sm-flex align-items-sm-center col-12 col-sm-2"
@@ -157,93 +158,6 @@
                   data-bs-dismiss="modal"
                 >
                   Save Changes
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal fade" id="edit-modal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div id="edit-modal-header" class="modal-header light-mode-background">
-                <h5 class="fw-bold" id="edit-modal-title">Edit Task</h5>
-                <button
-                  type="button"
-                  id="close-btn"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                ></button>
-              </div>
-              <div class="modal-body" id="edit-modal-body">
-                <form class="form">
-                  <input type="text" id="edit-id" class="d-none">
-                  <div class="form-group row mb-1">
-                    <div
-                      class="title d-sm-flex align-items-sm-center col-12 col-sm-2"
-                    >
-                      <label class="fw-bold" for="edit-element-title">Title:</label>
-                    </div>
-                    <div class="col-12 col-sm-10">
-                      <input
-                        class="form-control border rounded-3 border-2 border-focus border-dark w-100"
-                        type="text"
-                        id="edit-element-title"
-                      />
-                      <span
-                        id="edit-title-warning"
-                        class="badge bg-danger text-white d-none"
-                      ></span>
-                    </div>
-                  </div>
-                  <div class="form-group row mb-1">
-                    <div
-                      class="title d-sm-flex align-items-sm-center col-12 col-sm-2"
-                    >
-                      <label class="fw-bold" for="edit-element-status"
-                        >Status:</label
-                      >
-                    </div>
-                    <div class="col-12 col-sm-10">
-                      <select
-                        name="Status"
-                        id="edit-element-status"
-                        class="form-control border rounded-3 border-2 border-focus border-dark w-100"
-                      >
-                        <option value="to-do">To do</option>
-                        <option value="active">Active</option>
-                        <option value="completed">Completed</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group row mb-1">
-                    <div
-                      class="title d-sm-flex align-items-sm-center col-12 col-sm-2"
-                    >
-                      <label class="fw-bold" for="edit-element-priority"
-                        >Priority:</label
-                      >
-                    </div>
-                    <div class="col-12 col-sm-10">
-                      <select
-                        name="Status"
-                        id="edit-element-priority"
-                        class="form-control border rounded-3 border-2 border-focus border-dark w-100"
-                      >
-                        <option value="high">High</option>
-                        <option value="medium">Medium</option>
-                        <option value="low">Low</option>
-                      </select>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer" id="edit-modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
                 </button>
                 <button
                   type="button"
